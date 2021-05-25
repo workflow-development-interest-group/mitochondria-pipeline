@@ -5,6 +5,5 @@
   Steps  
   1.  SubsetBamToChrM
   2.  RevertSam
-  3.  AlignAndCall 
   4.  ConvergeAtEveryBase
   5.  SplitMultiAllelicSites
