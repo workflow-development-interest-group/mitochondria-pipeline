@@ -6,12 +6,11 @@
   1.  [SubsetBamToChrM](https://github.com/cwl-apps/mitochondria-pipeline/blob/60097661bd453cd7fbfa6c26c58f6b2757b4e833/scripts/MitochondriaPipeline.wdl#L192)
   2.  RevertSam
   3.  AlignAndCall  
-  4.  --- AlignToMt (AlignAndMarkDuplicates)
-  7.  --- AlignToShiftedMt (AlignAndMarkDuplicates)
-  8.  --- scatter: CollectWgsMetrics 
-  9.  --- scatter: Call M2  
-  11. --- scater?: LiftoverAndCombineVcfs
-  12. --- MergeStats
+  4.  --- AlignToMt/AlignToShiftedMT [AlignAndMarkDuplicates](https://github.com/cwl-apps/mitochondria-pipeline/blob/508b4d6ca88d9182d0277fb90c8b8e9ae70fb1c5/scripts/AlignmentPipeline.wdl#L56)  
+  5.  --- scatter: CollectWgsMetrics 
+  6.  --- scatter: Call M2  
+  7. --- scater?: LiftoverAndCombineVcfs
+  1. --- MergeStats
   13. --- InitialFilter
   14. --- SplitMultiAllelicsAndRemoveNonPassSites
   15. --- GetContamination
