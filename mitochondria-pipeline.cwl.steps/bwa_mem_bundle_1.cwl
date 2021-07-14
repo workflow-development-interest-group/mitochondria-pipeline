@@ -1,4 +1,4 @@
-cwlVersion: v1.0
+cwlVersion: v1.2
 class: CommandLineTool
 label: BWA MEM Bundle 0.7.15 CWL1.0
 doc: |-
@@ -764,10 +764,8 @@ outputs:
   doc: Aligned reads.
   type: File?
   secondaryFiles:
-  - .bai
-  - ^.bai
-  - .crai
-  - ^.crai
+  - pattern: .bai
+    required: false
   outputBinding:
     glob: "${ \n    return [\"*.sam\", \"*.bam\", \"*.cram\"] \n}"
     outputEval: |-
@@ -1229,24 +1227,24 @@ arguments:
         return cmd;
     }
   shellQuote: false
-id: dave/build-mitochondria-pipeline/bwa-mem-bundle/0
+id: dave/build-mitochondria-pipeline/bwa-mem-bundle/6
 sbg:appVersion:
-- v1.0
+- v1.2
 sbg:categories:
 - Genomics
 - Alignment
 - CWL1.0
 sbg:cmdPreview: |-
   /bin/bash -c " export REF_CACHE=${PWD} ;  tar -tvf reference.HG38.fasta.gz.tar 1>&2; tar -xf reference.HG38.fasta.gz.tar ;  bwa mem  -R '@RG\tID:1\tPL:Illumina\tSM:dnk_sample' -t 10  reference.HG38.fasta.gz  /path/to/LP6005524-DNA_C01_lane_7.sorted.converted.filtered.pe_2.gz /path/to/LP6005524-DNA_C01_lane_7.sorted.converted.filtered.pe_1.gz  | bamsormadup threads=8 level=1 tmplevel=-1 inputformat=sam outputformat=cram SO=coordinate reference=reference.HG38.fasta.gz indexfilename=LP6005524-DNA_C01_lane_7.sorted.converted.filtered.cram.crai M=LP6005524-DNA_C01_lane_7.sorted.converted.filtered.sormadup_metrics.log > LP6005524-DNA_C01_lane_7.sorted.converted.filtered.cram  ;declare -i pipe_statuses=(\${PIPESTATUS[*]});len=\${#pipe_statuses[@]};declare -i tot=0;echo \${pipe_statuses[*]};for (( i=0; i<\${len}; i++ ));do if [ \${pipe_statuses[\$i]} -ne 0 ];then tot=\${pipe_statuses[\$i]}; fi;done;if [ \$tot -ne 0 ]; then >&2 echo Error in piping. Pipe statuses: \${pipe_statuses[*]};fi; if [ \$tot -ne 0 ]; then false;fi"
-sbg:content_hash: a825206ec8f9097a7e2dded596e9ee1ba879cd08b7f0e4debb8ba478fcdf1b291
+sbg:content_hash: a52424b13e3925c3a7a68f29cf946dc463d2c6cf6f119a023f7aa97d1fe892c3b
 sbg:contributors:
 - dave
 sbg:createdBy: dave
 sbg:createdOn: 1622141318
 sbg:expand_workflow: false
-sbg:id: dave/build-mitochondria-pipeline/bwa-mem-bundle/0
+sbg:id: dave/build-mitochondria-pipeline/bwa-mem-bundle/6
 sbg:image_url:
-sbg:latestRevision: 0
+sbg:latestRevision: 6
 sbg:license: |-
   BWA: GNU Affero General Public License v3.0, MIT License; Biobambam2: GNU General Public License v3.0
 sbg:links:
@@ -1263,17 +1261,12 @@ sbg:links:
 - id: http://www.ncbi.nlm.nih.gov/pubmed/19451168
   label: Publication BWA Algorithm
 sbg:modifiedBy: dave
-sbg:modifiedOn: 1622141318
+sbg:modifiedOn: 1622860998
 sbg:project: dave/build-mitochondria-pipeline
 sbg:projectName: 'BUILD: Mitochondria Pipeline'
 sbg:publisher: sbg
-sbg:revision: 0
-sbg:revisionNotes: |-
-  Uploaded using sbpack v2020.10.05. 
-  Source: 
-  repo: https://github.com/cwl-apps/gatk-best-practices.git
-  file: 
-  commit: (uncommitted file)
+sbg:revision: 6
+sbg:revisionNotes: ''
 sbg:revisionsInfo:
 - sbg:modifiedBy: dave
   sbg:modifiedOn: 1622141318
@@ -1284,6 +1277,30 @@ sbg:revisionsInfo:
     repo: https://github.com/cwl-apps/gatk-best-practices.git
     file: 
     commit: (uncommitted file)
+- sbg:modifiedBy: dave
+  sbg:modifiedOn: 1622834149
+  sbg:revision: 1
+  sbg:revisionNotes: array of bam outputs
+- sbg:modifiedBy: dave
+  sbg:modifiedOn: 1622834584
+  sbg:revision: 2
+  sbg:revisionNotes: ''
+- sbg:modifiedBy: dave
+  sbg:modifiedOn: 1622836146
+  sbg:revision: 3
+  sbg:revisionNotes: ''
+- sbg:modifiedBy: dave
+  sbg:modifiedOn: 1622860795
+  sbg:revision: 4
+  sbg:revisionNotes: ''
+- sbg:modifiedBy: dave
+  sbg:modifiedOn: 1622860973
+  sbg:revision: 5
+  sbg:revisionNotes: ''
+- sbg:modifiedBy: dave
+  sbg:modifiedOn: 1622860998
+  sbg:revision: 6
+  sbg:revisionNotes: ''
 sbg:sbgMaintained: false
 sbg:toolAuthor: Heng Li
 sbg:toolkit: BWA

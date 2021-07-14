@@ -1,4 +1,4 @@
-cwlVersion: v1.0
+cwlVersion: v1.2
 class: CommandLineTool
 label: GATK SamToFastq
 doc: |-
@@ -643,20 +643,20 @@ arguments:
   position: 6
   valueFrom: "${\n        return '$cmd';\n}"
   shellQuote: false
-id: dave/build-mitochondria-pipeline/gatk-samtofastq/0
+id: dave/build-mitochondria-pipeline/gatk-samtofastq/1
 sbg:appVersion:
-- v1.0
+- v1.2
 sbg:categories:
 - Utilities
 - BAM Processing
-sbg:content_hash: a9e689a8b01b9e6f6f132b82bf7e9ebd44810a16c8369fa7cc4bb1e78127274ff
+sbg:content_hash: a9218b248ce7e6eab4ebdcb8e04418844c942fdc689a9e743f1f24819e5f79338
 sbg:contributors:
 - dave
 sbg:createdBy: dave
 sbg:createdOn: 1622141489
-sbg:id: dave/build-mitochondria-pipeline/gatk-samtofastq/0
+sbg:id: dave/build-mitochondria-pipeline/gatk-samtofastq/1
 sbg:image_url:
-sbg:latestRevision: 0
+sbg:latestRevision: 1
 sbg:license: Open source BSD (3-clause) license
 sbg:links:
 - id: https://software.broadinstitute.org/gatk/
@@ -672,17 +672,12 @@ sbg:links:
     https://software.broadinstitute.org/gatk/documentation/tooldocs/4.1.0.0/picard_sam_SamToFastq.php
   label: Documentation
 sbg:modifiedBy: dave
-sbg:modifiedOn: 1622141489
+sbg:modifiedOn: 1622861214
 sbg:project: dave/build-mitochondria-pipeline
 sbg:projectName: 'BUILD: Mitochondria Pipeline'
 sbg:publisher: sbg
-sbg:revision: 0
-sbg:revisionNotes: |-
-  Uploaded using sbpack v2020.10.05. 
-  Source: 
-  repo: https://github.com/cwl-apps/gatk-best-practices.git
-  file: 
-  commit: (uncommitted file)
+sbg:revision: 1
+sbg:revisionNotes: ''
 sbg:revisionsInfo:
 - sbg:modifiedBy: dave
   sbg:modifiedOn: 1622141489
@@ -693,6 +688,10 @@ sbg:revisionsInfo:
     repo: https://github.com/cwl-apps/gatk-best-practices.git
     file: 
     commit: (uncommitted file)
+- sbg:modifiedBy: dave
+  sbg:modifiedOn: 1622861214
+  sbg:revision: 1
+  sbg:revisionNotes: ''
 sbg:sbgMaintained: false
 sbg:toolAuthor: Broad Institute
 sbg:toolkit: GATK

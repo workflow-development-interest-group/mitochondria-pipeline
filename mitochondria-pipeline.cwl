@@ -5,7 +5,7 @@ $namespaces:
   sbg: https://sevenbridges.com
 
 requirements:
-- class: ScatterFeatureRequirement
+- class: MultipleInputFeatureRequirement
 - class: InlineJavascriptRequirement
 - class: StepInputExpressionRequirement
 
@@ -18,146 +18,87 @@ inputs:
   - pattern: ^.dict
     required: true
   sbg:fileTypes: FASTA
-  sbg:x: -469.82830810546875
-  sbg:y: -527.2415161132812
+  sbg:x: 0
+  sbg:y: 336.9140625
 - id: cram
   type: File?
   secondaryFiles:
   - pattern: .crai
     required: true
-  sbg:x: -580.0416870117188
-  sbg:y: -231.31129455566406
+  sbg:x: 0
+  sbg:y: 443.6796875
 - id: reference_index_tar
   label: Non shifted Reference Index TAR
   doc: Reference fasta file with its BWA index files packed in a TAR archive.
   type: File
   sbg:fileTypes: TAR
-  sbg:x: 134.5868377685547
-  sbg:y: -652.9955444335938
+  sbg:x: 0
+  sbg:y: 230.1484375
 - id: shifted_reference_index_tar
   label: Shifted Reference Index TAR
   doc: Reference fasta file with its BWA index files packed in a TAR archive.
   type: File
   sbg:fileTypes: TAR
-  sbg:x: 138.75247192382812
-  sbg:y: -45.26885223388672
-- id: non_shifed_in_reference
-  label: Non Shifted Reference
-  doc: |-
-    The reference sequence in FASTA format to which reads will be aligned.  Required.
+  sbg:x: 0
+  sbg:y: 123.3828125
+- id: in_reference_and_index
+  label: Shifted Reference FASTA and index
+  doc: Reference FASTA or FA sequence file and associated index and dict.
   type: File
-  sbg:fileTypes: FASTA, FA, FASTA.GZ
-  sbg:x: 514.718505859375
-  sbg:y: -859.6279907226562
-- id: in_reference_1
-  label: Shifted Reference
-  doc: |-
-    The reference sequence in FASTA format to which reads will be aligned.  Required.
+  secondaryFiles:
+  - pattern: .fai
+    required: true
+  - pattern: ^.dict
+    required: true
+  sbg:fileTypes: FASTA, FA
+  sbg:x: 952.1976318359375
+  sbg:y: 178.59780883789062
+- id: in_reference_and_index_1
+  label: Non ShiftedReference FASTA and index
+  doc: Reference FASTA or FA sequence file and associated index and dict.
   type: File
-  sbg:fileTypes: FASTA, FA, FASTA.GZ
-  sbg:x: 472.44720458984375
-  sbg:y: -192.5330352783203
+  secondaryFiles:
+  - pattern: .fai
+    required: true
+  - pattern: ^.dict
+    required: true
+  sbg:fileTypes: FASTA, FA
+  sbg:x: 952.8524780273438
+  sbg:y: -407.0513610839844
+- id: chain
+  type: File
+  sbg:x: 1302.29345703125
+  sbg:y: 553.0625
+- id: blacklisted_sites
+  type: File
+  sbg:x: 1997.68701171875
+  sbg:y: 577.0529174804688
 
 outputs:
-- id: dups_metrics
-  label: Sormadup metrics
-  doc: Metrics file for biobambam mark duplicates
-  type: File?
-  outputSource:
-  - bwa_mem_bundle/dups_metrics
-  sbg:fileTypes: LOG
-  sbg:x: 523.5358276367188
-  sbg:y: -529.854736328125
-- id: aligned_reads
-  label: Aligned SAM/BAM
-  doc: Aligned reads.
-  type: File?
-  outputSource:
-  - bwa_mem_bundle/aligned_reads
-  sbg:fileTypes: SAM, BAM, CRAM
-  sbg:x: 521.3660278320312
-  sbg:y: -336.5093994140625
-- id: aligned_reads_1
-  label: Aligned SAM/BAM
-  doc: Aligned reads.
-  type: File?
-  outputSource:
-  - bwa_mem_bundle_1/aligned_reads
-  sbg:fileTypes: SAM, BAM, CRAM
-  sbg:x: 468.83074951171875
-  sbg:y: 132.8069305419922
-- id: shifted_wgs_metrics
-  label: Shifted WGS metrics
+- id: wgs_metrics
+  label: Non Shifted WGS metrics
   doc: Output metrics file.
   type: File?
   outputSource:
-  - picard_collectwgsmetricswithnonzerocoverage_2_21_6_cwl1_0/wgs_metrics
+  - picard_collectwgsmetricswithnonzerocoverage_2_21_6_cwl1_2/wgs_metrics
   sbg:fileTypes: TXT
-  sbg:x: 953.853271484375
-  sbg:y: 51.96418380737305
-- id: shited_output_chart
-  label: Shifted Output chart
-  doc: Output chart.
-  type: File?
-  outputSource:
-  - picard_collectwgsmetricswithnonzerocoverage_2_21_6_cwl1_0/output_chart
-  sbg:fileTypes: PDF
-  sbg:x: 868.3981323242188
-  sbg:y: 181.16172790527344
-- id: non_shifted_output_chart
-  label: Non Shifted Output chart
-  doc: Output chart.
-  type: File?
-  outputSource:
-  - picard_collectwgsmetricswithnonzerocoverage_2_21_6_cwl1_1/output_chart
-  sbg:fileTypes: PDF
-  sbg:x: 950.7110595703125
-  sbg:y: -711.778564453125
-- id: non_shifted_wgs_metrics
-  label: Non Shifted WGS metrics
+  sbg:x: 1581.826171875
+  sbg:y: -149.3757781982422
+- id: wgs_metrics_1
+  label: Shifted WGS metrics
   doc: Output metrics file.
   type: File?
   outputSource:
   - picard_collectwgsmetricswithnonzerocoverage_2_21_6_cwl1_1/wgs_metrics
   sbg:fileTypes: TXT
-  sbg:x: 885.3248291015625
-  sbg:y: -870.4193115234375
-- id: non_shifted_variants
-  label: Non Shifted Variants
-  doc: Output variants in VCF or VCF.GZ format.
+  sbg:x: 1825.9027099609375
+  sbg:y: -22.09930419921875
+- id: merged_and_filtered_vcf
   type: File?
   outputSource:
-  - gatk_mutect2_non_shifted_mt/out_variants
-  sbg:fileTypes: VCF, VCF.GZ
-  sbg:x: 908.877197265625
-  sbg:y: -574.6871337890625
-- id: non_shifted_out_stats
-  label: Non Shifted Mutect2 Output stats
-  doc: Output stat file.
-  type: File?
-  outputSource:
-  - gatk_mutect2_non_shifted_mt/out_stats
-  sbg:fileTypes: STATS, VCF.GZ.STATS, VCF.STATS
-  sbg:x: 1010.8218994140625
-  sbg:y: -459.2934265136719
-- id: shifted_out_variants
-  label: Shifted Output variants
-  doc: Output variants in VCF or VCF.GZ format.
-  type: File?
-  outputSource:
-  - gatk_mutect2_shifted_mt/out_variants
-  sbg:fileTypes: VCF, VCF.GZ
-  sbg:x: 1163.3890380859375
-  sbg:y: -268.1025085449219
-- id: shifted_out_stats
-  label: Shifted Mutect2 Output stats
-  doc: Output stat file.
-  type: File?
-  outputSource:
-  - gatk_mutect2_shifted_mt/out_stats
-  sbg:fileTypes: STATS, VCF.GZ.STATS, VCF.STATS
-  sbg:x: 1163.3890380859375
-  sbg:y: -121.05300903320312
+  - filtermutectcalls_1/merged_and_filtered_vcf
+  sbg:x: 3409.916015625
+  sbg:y: 202.43544006347656
 
 steps:
 - id: subset_bam_to_chrom_m
@@ -172,8 +113,8 @@ steps:
   run: mitochondria-pipeline.cwl.steps/subset_bam_to_chrom_m.cwl
   out:
   - id: chrM_bam
-  sbg:x: -316.7553405761719
-  sbg:y: -342.0967102050781
+  sbg:x: 276.625
+  sbg:y: 276.53125
 - id: revert_sam
   label: revert-sam
   in:
@@ -182,8 +123,8 @@ steps:
   run: mitochondria-pipeline.cwl.steps/revert_sam.cwl
   out:
   - id: unaligned_bam
-  sbg:x: -106.36557006835938
-  sbg:y: -379.2901916503906
+  sbg:x: 481.85467529296875
+  sbg:y: 283.53125
 - id: gatk_samtofastq
   label: GATK SamToFastq
   in:
@@ -193,10 +134,10 @@ steps:
   out:
   - id: out_reads
   - id: unmapped_reads
-  sbg:x: 101.75660705566406
-  sbg:y: -304.56036376953125
+  sbg:x: 678.6671752929688
+  sbg:y: 276.53125
 - id: bwa_mem_bundle
-  label: BWA MEM Bundle 0.7.15 CWL1.0
+  label: non shifted bwa
   in:
   - id: input_reads
     source:
@@ -207,10 +148,10 @@ steps:
   out:
   - id: aligned_reads
   - id: dups_metrics
-  sbg:x: 321.1471862792969
-  sbg:y: -440.2679138183594
+  sbg:x: 993.5999145507812
+  sbg:y: 450.6796875
 - id: bwa_mem_bundle_1
-  label: BWA MEM Bundle 0.7.15 CWL1.0
+  label: Shifted bwa
   in:
   - id: input_reads
     source:
@@ -221,50 +162,16 @@ steps:
   out:
   - id: aligned_reads
   - id: dups_metrics
-  sbg:x: 373.1943359375
-  sbg:y: -85.68302154541016
-- id: picard_collectwgsmetricswithnonzerocoverage_2_21_6_cwl1_0
-  label: Picard CollectWgsMetricsWithNonZeroCoverage CWL1.0
-  in:
-  - id: chart_output
-    default: shifted
-  - id: include_bq_histogram
-    default: 'true'
-  - id: in_alignments
-    source: bwa_mem_bundle_1/aligned_reads
-  - id: in_reference
-    source: in_reference_1
-  run: |-
-    mitochondria-pipeline.cwl.steps/picard_collectwgsmetricswithnonzerocoverage_2_21_6_cwl1_0.cwl
-  out:
-  - id: output_chart
-  - id: wgs_metrics
-  - id: theoretical_sensitivity_out_file
-  sbg:x: 703.9730834960938
-  sbg:y: 48.08837127685547
-- id: picard_collectwgsmetricswithnonzerocoverage_2_21_6_cwl1_1
-  label: Picard CollectWgsMetricsWithNonZeroCoverage CWL1.0
+  sbg:x: 993.5999145507812
+  sbg:y: 329.9140625
+- id: gatk_mutect2_non_shifted_mt
+  label: non shifted mutect2
   in:
   - id: in_alignments
     source: bwa_mem_bundle/aligned_reads
-  - id: in_reference
-    source: non_shifed_in_reference
-  run: |-
-    mitochondria-pipeline.cwl.steps/picard_collectwgsmetricswithnonzerocoverage_2_21_6_cwl1_1.cwl
-  out:
-  - id: output_chart
-  - id: wgs_metrics
-  - id: theoretical_sensitivity_out_file
-  sbg:x: 777.193115234375
-  sbg:y: -737.9566650390625
-- id: gatk_mutect2_non_shifted_mt
-  label: GATK Mutect2 CWL1.0
-  in:
-  - id: in_alignments
-    source:
-    - bwa_mem_bundle/aligned_reads
+    pickValue: first_non_null
   - id: in_reference_and_index
-    source: non_shifed_in_reference
+    source: in_reference_and_index_1
   - id: annotation
     default:
     - StrandBiasBySample
@@ -286,16 +193,18 @@ steps:
   - id: out_alignments
   - id: f1r2_counts
   - id: out_stats
-  sbg:x: 764.9480590820312
-  sbg:y: -449.82147216796875
+  sbg:x: 1334.3018798828125
+  sbg:y: 425
 - id: gatk_mutect2_shifted_mt
-  label: GATK Mutect2 CWL1.0
+  label: shifted mutect2
+  doc: |-
+    https://github.com/cwl-apps/gatk-best-practices/blob/8f54dbc054ef5d5401a48d13b9979d3156da4e6d/pre-processing.cwl.steps/gatk_samtofastq_4_1_0_0.cwl
   in:
   - id: in_alignments
-    source:
-    - bwa_mem_bundle_1/aligned_reads
+    source: bwa_mem_bundle_1/aligned_reads
+    pickValue: first_non_null
   - id: in_reference_and_index
-    source: in_reference_1
+    source: in_reference_and_index
   - id: annotation
     default:
     - StrandBiasBySample
@@ -305,84 +214,180 @@ steps:
     - MateUnmappedAndUnmappedReadFilter
   - id: max_mnp_distance
     default: 0
-  scatter:
-  - in_alignments
   run: mitochondria-pipeline.cwl.steps/gatk_mutect2_shifted_mt.cwl
   out:
   - id: out_variants
   - id: out_alignments
   - id: f1r2_counts
   - id: out_stats
-  sbg:x: 847.5328979492188
-  sbg:y: -226.8144073486328
+  sbg:x: 1302.29345703125
+  sbg:y: 276.53125
+- id: picard_collectwgsmetricswithnonzerocoverage_2_21_6_cwl1_2
+  label: non shifted metrics
+  in:
+  - id: in_alignments
+    source: bwa_mem_bundle/aligned_reads
+  - id: in_reference
+    source: in_reference_and_index_1
+  run: |-
+    mitochondria-pipeline.cwl.steps/picard_collectwgsmetricswithnonzerocoverage_2_21_6_cwl1_2.cwl
+  out:
+  - id: output_chart
+  - id: wgs_metrics
+  - id: theoretical_sensitivity_out_file
+  sbg:x: 1369.103271484375
+  sbg:y: -110.30288696289062
+- id: picard_collectwgsmetricswithnonzerocoverage_2_21_6_cwl1_1
+  label: shifted wgs metrics
+  in:
+  - id: in_alignments
+    source: bwa_mem_bundle_1/aligned_reads
+  - id: in_reference
+    source: in_reference_and_index
+  run: |-
+    mitochondria-pipeline.cwl.steps/picard_collectwgsmetricswithnonzerocoverage_2_21_6_cwl1_1.cwl
+  out:
+  - id: output_chart
+  - id: wgs_metrics
+  - id: theoretical_sensitivity_out_file
+  sbg:x: 1356.5589599609375
+  sbg:y: 81.09429168701172
+- id: picard_lift_over_and_merge
+  label: picard-lift-over-and-merge
+  in:
+  - id: shifted_vcf
+    source: gatk_mutect2_shifted_mt/out_variants
+  - id: reference
+    source: in_reference_and_index_1
+  - id: chain
+    source: chain
+  - id: non_shifted_vcf
+    source: gatk_mutect2_non_shifted_mt/out_variants
+  run: mitochondria-pipeline.cwl.steps/picard_lift_over_and_merge.cwl
+  out:
+  - id: merged_vcf
+  sbg:x: 1742.103271484375
+  sbg:y: 140.79840087890625
+- id: gatk_merge_mutect_stats
+  label: gatk-merge-mutect-stats
+  in:
+  - id: stats
+    source:
+    - gatk_mutect2_shifted_mt/out_stats
+    - gatk_mutect2_non_shifted_mt/out_stats
+  run: mitochondria-pipeline.cwl.steps/gatk_merge_mutect_stats.cwl
+  out:
+  - id: merged_stats
+  sbg:x: 1779.68505859375
+  sbg:y: 437.43829345703125
+- id: filtermutectcalls
+  label: Initial Filter - FilterMutectCalls
+  in:
+  - id: vcf
+    source: picard_lift_over_and_merge/merged_vcf
+  - id: fasta
+    source: in_reference_and_index_1
+  - id: raw_vcf_stats
+    source: gatk_merge_mutect_stats/merged_stats
+  - id: max_alt_allele_count
+    default: 4
+  - id: min_allele_fraction
+    default: 0
+  - id: blacklisted_sites
+    source: blacklisted_sites
+  run: mitochondria-pipeline.cwl.steps/filtermutectcalls.cwl
+  out:
+  - id: filter_vcf
+  - id: merged_and_filtered_vcf
+  - id: tsv
+  sbg:x: 2198.98388671875
+  sbg:y: 243.75921630859375
+- id: splitmultiallelicsandremovenonpasssites
+  label: SplitMultiAllelicsAndRemoveNonPassSites
+  in:
+  - id: reference
+    source: in_reference_and_index_1
+  - id: vcf
+    source: filtermutectcalls/merged_and_filtered_vcf
+  run: mitochondria-pipeline.cwl.steps/splitmultiallelicsandremovenonpasssites.cwl
+  out:
+  - id: all_vcfs
+  - id: splitAndPassOnly_vcf
+  sbg:x: 2460.104248046875
+  sbg:y: -22.690200805664062
+- id: get_contamination
+  label: Get Contamination
+  in:
+  - id: vcf
+    source: splitmultiallelicsandremovenonpasssites/splitAndPassOnly_vcf
+  run: mitochondria-pipeline.cwl.steps/get_contamination.cwl
+  out:
+  - id: output_noquotes
+  - id: contamination
+  - id: headers
+  - id: major_hg
+  - id: output
+  - id: mean_het_maj_minor
+  - id: minor_hg
+  sbg:x: 2711.877685546875
+  sbg:y: -251.48751831054688
+- id: filtermutectcalls_1
+  label: FilterMutectCalls
+  in:
+  - id: vcf
+    source: splitmultiallelicsandremovenonpasssites/splitAndPassOnly_vcf
+  - id: fasta
+    source: in_reference_and_index_1
+  - id: raw_vcf_stats
+    source: gatk_merge_mutect_stats/merged_stats
+  - id: max_alt_allele_count
+    default: 4
+  - id: blacklisted_sites
+    source: blacklisted_sites
+  - id: custom_input
+    source: get_contamination/contamination
+  run: mitochondria-pipeline.cwl.steps/filtermutectcalls_1.cwl
+  when: |-
+    ${if(inputs.custom_input.contents = "YES"){
+        true
+        
+    } else {
+            false
+        
+    }}
+  out:
+  - id: filter_vcf
+  - id: merged_and_filtered_vcf
+  - id: tsv
+  sbg:x: 3042.3251953125
+  sbg:y: 36.56428146362305
 sbg:appVersion:
 - v1.2
-- v1.0
-sbg:content_hash: a76d0d5e28aabe3cea7922146f0cabaad49d1120f418dcb7b6ad4fd2afc93e34f
+sbg:content_hash: a830e9a7a7640067f213c3c97b9d3ffce1ada03fd0416b24de13642a5ce8e2d2e
 sbg:contributors:
 - dave
 sbg:createdBy: dave
-sbg:createdOn: 1622052954
-sbg:id: dave/build-mitochondria-pipeline/mitochondria-pipeline/11
+sbg:createdOn: 1626279500
+sbg:id: arocco/mitochondrial-pipeline/mitochondria-pipeline/1
 sbg:image_url:
-sbg:latestRevision: 11
+sbg:latestRevision: 1
 sbg:modifiedBy: dave
-sbg:modifiedOn: 1622647228
+sbg:modifiedOn: 1626280007
 sbg:original_source: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/dave/build-mitochondria-pipeline/mitochondria-pipeline/11/raw/
-sbg:project: dave/build-mitochondria-pipeline
-sbg:projectName: 'BUILD: Mitochondria Pipeline'
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/arocco/mitochondrial-pipeline/mitochondria-pipeline/1/raw/
+sbg:project: arocco/mitochondrial-pipeline
+sbg:projectName: Mitochondrial Pipeline
 sbg:publisher: sbg
-sbg:revision: 11
-sbg:revisionNotes: label mutect2
+sbg:revision: 1
+sbg:revisionNotes: ''
 sbg:revisionsInfo:
 - sbg:modifiedBy: dave
-  sbg:modifiedOn: 1622052954
+  sbg:modifiedOn: 1626279500
   sbg:revision: 0
-  sbg:revisionNotes:
+  sbg:revisionNotes: Copy of dave/build-mitochondria-pipeline/mitochondria-pipeline/64
 - sbg:modifiedBy: dave
-  sbg:modifiedOn: 1622053106
+  sbg:modifiedOn: 1626280007
   sbg:revision: 1
   sbg:revisionNotes: ''
-- sbg:modifiedBy: dave
-  sbg:modifiedOn: 1622053860
-  sbg:revision: 2
-  sbg:revisionNotes: ''
-- sbg:modifiedBy: dave
-  sbg:modifiedOn: 1622141554
-  sbg:revision: 3
-  sbg:revisionNotes: ''
-- sbg:modifiedBy: dave
-  sbg:modifiedOn: 1622141673
-  sbg:revision: 4
-  sbg:revisionNotes: ''
-- sbg:modifiedBy: dave
-  sbg:modifiedOn: 1622155388
-  sbg:revision: 5
-  sbg:revisionNotes: ''
-- sbg:modifiedBy: dave
-  sbg:modifiedOn: 1622160498
-  sbg:revision: 6
-  sbg:revisionNotes: ''
-- sbg:modifiedBy: dave
-  sbg:modifiedOn: 1622161030
-  sbg:revision: 7
-  sbg:revisionNotes: ''
-- sbg:modifiedBy: dave
-  sbg:modifiedOn: 1622161443
-  sbg:revision: 8
-  sbg:revisionNotes: ''
-- sbg:modifiedBy: dave
-  sbg:modifiedOn: 1622161723
-  sbg:revision: 9
-  sbg:revisionNotes: ''
-- sbg:modifiedBy: dave
-  sbg:modifiedOn: 1622647015
-  sbg:revision: 10
-  sbg:revisionNotes: added mutect2
-- sbg:modifiedBy: dave
-  sbg:modifiedOn: 1622647228
-  sbg:revision: 11
-  sbg:revisionNotes: label mutect2
 sbg:sbgMaintained: false
 sbg:validationErrors: []

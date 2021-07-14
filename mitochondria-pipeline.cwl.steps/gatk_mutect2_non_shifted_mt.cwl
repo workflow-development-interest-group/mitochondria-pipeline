@@ -1,4 +1,4 @@
-cwlVersion: v1.0
+cwlVersion: v1.2
 class: CommandLineTool
 label: GATK Mutect2 CWL1.0
 doc: |-
@@ -133,28 +133,12 @@ inputs:
   label: Input
   doc: |-
     BAM/SAM/CRAM file containing reads this argument must be specified at least once.
-  type:
-    type: array
-    inputBinding:
-      separate: true
-    items: File
+  type: File
   secondaryFiles:
-  - ^.bai
+  - pattern: .bai
   inputBinding:
-    prefix: ''
-    position: 4
-    valueFrom: |-
-      ${
-          var output = "";
-          for (var i=0; i < inputs.in_alignments.length; i++)
-          {
-              if (inputs.in_alignments[i])
-              {
-                  output = output + "--input " + inputs.in_alignments[i].path + " ";
-              }
-          }
-          return output;
-      }
+    prefix: --input
+    position: 3
     shellQuote: false
   sbg:altPrefix: -I
   sbg:category: Required Arguments
@@ -169,6 +153,11 @@ inputs:
   label: Reference FASTA and index
   doc: Reference FASTA or FA sequence file and associated index and dict.
   type: File
+  secondaryFiles:
+  - pattern: .fai
+    required: true
+  - pattern: ^.dict
+    required: true
   inputBinding:
     prefix: --reference
     position: 4
@@ -238,17 +227,17 @@ inputs:
   doc: The set of alleles for which to force genotyping regardless of evidence.
   type: File?
   secondaryFiles:
-  - |-
-    ${
-        if (self.nameext == ".vcf")
-        {
-            return self.basename + ".idx";
-        }
-        else
-        {
-            return self.basename + ".tbi";
-        }
-    }
+  - pattern: |-
+      ${
+          if (self.nameext == ".vcf")
+          {
+              return self.basename + ".idx";
+          }
+          else
+          {
+              return self.basename + ".tbi";
+          }
+      }
   inputBinding:
     prefix: --alleles
     position: 4
@@ -715,17 +704,17 @@ inputs:
     Population vcf of germline sequencing containing allele fractions. (typically gNOMAD)
   type: File?
   secondaryFiles:
-  - |-
-    ${
-        if (self.nameext == ".vcf")
-        {
-            return self.basename + ".idx";
-        }
-        else
-        {
-            return self.basename + ".tbi";
-        }
-    }
+  - pattern: |-
+      ${
+          if (self.nameext == ".vcf")
+          {
+              return self.basename + ".idx";
+          }
+          else
+          {
+              return self.basename + ".tbi";
+          }
+      }
   inputBinding:
     prefix: --germline-resource
     position: 4
@@ -961,17 +950,17 @@ inputs:
   doc: Vcf file of sites observed in normal.
   type: File?
   secondaryFiles:
-  - |-
-    ${
-        if (self.nameext == ".vcf")
-        {
-            return self.basename + ".idx";
-        }
-        else
-        {
-            return self.basename + ".tbi";
-        }
-    }
+  - pattern: |-
+      ${
+          if (self.nameext == ".vcf")
+          {
+              return self.basename + ".idx";
+          }
+          else
+          {
+              return self.basename + ".tbi";
+          }
+      }
   inputBinding:
     prefix: --panel-of-normals
     position: 4
@@ -1993,8 +1982,10 @@ outputs:
   doc: Output variants in VCF or VCF.GZ format.
   type: File?
   secondaryFiles:
-  - "${\n    return [self.basename + \".idx\", self.nameroot + \".idx\"]\n}"
-  - "${\n    return [self.basename + \".tbi\", self.nameroot + \".tbi\"]\n}"
+  - pattern: "${\n    return [self.basename + \".idx\", self.nameroot + \".idx\"]\n\
+      }"
+  - pattern: "${\n    return [self.basename + \".tbi\", self.nameroot + \".tbi\"]\n\
+      }"
   outputBinding:
     glob: "${\n    return [\"*.vcf.gz\", \"*.vcf\"]\n}"
     outputEval: |-
@@ -2063,8 +2054,8 @@ outputs:
   doc: Output alignments in BAM format
   type: File?
   secondaryFiles:
-  - .bai
-  - ^.bai
+  - pattern: .bai
+  - pattern: ^.bai
   outputBinding:
     glob: '*.bam'
     outputEval: |-
@@ -2640,20 +2631,20 @@ arguments:
         }
     }
   shellQuote: false
-id: dave/build-mitochondria-pipeline/gatk-mutect2/0
+id: dave/build-mitochondria-pipeline/gatk-mutect2/5
 sbg:appVersion:
-- v1.0
+- v1.2
 sbg:categories:
 - GATK-4
 - CWL1.0
-sbg:content_hash: ab03b7d97579a9573eefb0e704b04e4e841a7feb1031f238eaad4fc7315c543d7
+sbg:content_hash: acace08f44a80755f97843e88640bde484aaa476b26c41ac00ec1ff7cf2407fc2
 sbg:contributors:
 - dave
 sbg:createdBy: dave
 sbg:createdOn: 1622646232
-sbg:id: dave/build-mitochondria-pipeline/gatk-mutect2/0
+sbg:id: dave/build-mitochondria-pipeline/gatk-mutect2/5
 sbg:image_url:
-sbg:latestRevision: 0
+sbg:latestRevision: 5
 sbg:license: Open source BSD (3-clause) license
 sbg:links:
 - id: https://software.broadinstitute.org/gatk/
@@ -2669,17 +2660,37 @@ sbg:links:
     https://software.broadinstitute.org/gatk/documentation/tooldocs/4.1.6.0/org_broadinstitute_hellbender_tools_walkers_mutect_Mutect2.php
   label: Documentation
 sbg:modifiedBy: dave
-sbg:modifiedOn: 1622646232
+sbg:modifiedOn: 1622862857
 sbg:project: dave/build-mitochondria-pipeline
 sbg:projectName: 'BUILD: Mitochondria Pipeline'
 sbg:publisher: sbg
-sbg:revision: 0
-sbg:revisionNotes: "Uploaded using sbpack v2020.10.05. \nSource: gatk_mutect2_cwl1_0.cwl"
+sbg:revision: 5
+sbg:revisionNotes: ''
 sbg:revisionsInfo:
 - sbg:modifiedBy: dave
   sbg:modifiedOn: 1622646232
   sbg:revision: 0
   sbg:revisionNotes: "Uploaded using sbpack v2020.10.05. \nSource: gatk_mutect2_cwl1_0.cwl"
+- sbg:modifiedBy: dave
+  sbg:modifiedOn: 1622834532
+  sbg:revision: 1
+  sbg:revisionNotes: single input file bam
+- sbg:modifiedBy: dave
+  sbg:modifiedOn: 1622834908
+  sbg:revision: 2
+  sbg:revisionNotes: ''
+- sbg:modifiedBy: dave
+  sbg:modifiedOn: 1622835842
+  sbg:revision: 3
+  sbg:revisionNotes: added .fai secondary file
+- sbg:modifiedBy: dave
+  sbg:modifiedOn: 1622855767
+  sbg:revision: 4
+  sbg:revisionNotes: ^.dict
+- sbg:modifiedBy: dave
+  sbg:modifiedOn: 1622862857
+  sbg:revision: 5
+  sbg:revisionNotes: ''
 sbg:sbgMaintained: false
 sbg:toolAuthor: Broad Institute
 sbg:toolkit: GATK
